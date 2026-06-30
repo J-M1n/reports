@@ -1,431 +1,116 @@
 
-    <html>
+    <!DOCTYPE html>
+    <html lang="ko">
     <head>
-        <meta charset="utf-8">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <style>
-            body { font-family: 'Malgun Gothic', sans-serif; margin: 30px; background-color: #f8f9fa; }
-            table { border-collapse: collapse; width: 100%; margin-bottom: 25px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-            th, td { border: 1px solid #dee2e6; padding: 12px; text-align: center; }
-            th { background-color: #f1f3f5; font-weight: bold; }
-            h3 { color: #343a40; border-left: 5px solid #007bff; padding-left: 10px; margin-top: 30px; }
-            .red { color: #dc3545; font-weight: bold; }
-            .blue { color: #0d6efd; font-weight: bold; }
-            .box { background-color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>대시보드형 종합 수급 모니터 리포트</title>
+        
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; margin: 15px; color: #333; background-color: #f8f9fa; }
+        h2, h3 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 5px; margin-top: 25px; }
+        
+        /* 🚨 모바일 가독성 핵심: 표가 깨지지 않게 감싸는 스크롤 박스 */
+        .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        table { width: 100%; border-collapse: collapse; background-color: #fff; min-width: 600px; } /* 폰에서도 표 형태 유지 */
+        th, td { border: 1px solid #dee2e6; padding: 10px 8px; text-align: center; font-size: 14px; white-space: nowrap; }
+        th { background-color: #e9ecef; font-weight: bold; color: #495057; }
+        
+        .red { color: #d9534f; font-weight: bold; }
+        .blue { color: #0275d8; font-weight: bold; }
+        .black { color: #333; }
+        
+        /* 주도주 하이라이트 박스 */
+        .status-box { background-color: #fff; padding: 15px; border-radius: 8px; border-left: 5px solid #28a745; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .status-box p { margin: 6px 0; font-size: 15px; }
+        
+        /* 차트 구역 */
+        .chart-container { background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
+        
+        /* 📱 모바일 화면 (스마트폰) 정밀 저격 반응형 CSS */
+        @media screen and (max-width: 768px) {
+            body { margin: 10px; }
+            h2 { font-size: 18px; }
+            h3 { font-size: 16px; }
+            th, td { padding: 12px 10px; font-size: 15px; } /* 폰트 크기를 오히려 키우고 터치하기 쉽게 패딩 확대 */
+            .status-box p { font-size: 16px; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
     </head>
     <body>
-        <h2>📊 대시보드형 종합 수급 모니터 리포트 (2026-06-30 22:06)</h2>
+        <h2 style="text-align: center; margin-bottom:25px;">📊 메인 대시보드 종합 수급 리포트 <span style="font-size:13px; color:#666; font-weight:normal;">(2026-06-30 22:12)</span></h2>
         
-        <div class="box" style="margin-bottom: 25px;">
-            <h3>🎯 SK하이닉스 전략 매니저 (시나리오 작동 중)</h3>
-            <p><strong>현재 시나리오 판정:</strong> <span class="red">순항/보유 구간</span></p>
-            <p>현재가: 2,650,000원 | 통산 수익률: <span class="red">+18.67%</span></p>
+        <div class="status-box">
+            <h3 style="margin-top:0; border:none; color:#28a745;">💡 SK하이닉스 실시간 전략 시나리오</h3>
+            <p><b>현재가:</b> 2,650,000원 | <b>내 수익률:</b> <span class="red">+18.67%</span></p>
+            <p><b>운용 판단:</b> <span style="background-color:#fff3cd; padding:2px 5px; border-radius:4px; font-weight:bold;">순항/보유 구간</span></p>
         </div>
-
-        <h3>📈 코스피 / 코스닥 시장별 수급 현황</h3>
-        <p>시장 수급 데이터가 없습니다.</p>
-
-        <h3>💼 내 자산 보유 종목 및 입체 수급 연동</h3>
-        <table border="1" class="dataframe table">
-  <thead>
-    <tr style="text-align: right;">
-      <th>종목명</th>
-      <th>현재가</th>
-      <th>내 수익률</th>
-      <th>오늘 등락률</th>
-      <th>외인순매수</th>
-      <th>기관순매수</th>
-      <th>연기금</th>
-      <th>투신</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SK하이닉스</td>
-      <td>2,650,000원</td>
-      <td><span class="red">+18.67%</span></td>
-      <td><span class="red">+0.84%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>현대차</td>
-      <td>495,000원</td>
-      <td><span class="blue">-13.65%</span></td>
-      <td><span class="blue">-0.40%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>삼성SDI</td>
-      <td>487,000원</td>
-      <td><span class="blue">-12.88%</span></td>
-      <td><span class="blue">-4.88%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>바이오인프라</td>
-      <td>2,300원</td>
-      <td><span class="blue">-65.40%</span></td>
-      <td><span class="blue">-3.36%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-  </tbody>
-</table>
-
-        <h3>📊 선물 / 옵션 주요 주체별 수급 현황 (동적 그래프)</h3>
-        <div id="derivative_chart" class="box" style="width:100%; height:400px; margin-bottom: 25px;"></div>
-
-        <h3>🚨 세력 포착 멀티 레이더 (추세전환 & 거래폭발)</h3>
-        <table border="1" class="dataframe table">
-  <thead>
-    <tr style="text-align: right;">
-      <th>포착 종목명</th>
-      <th>현재가</th>
-      <th>등락률</th>
-      <th>포착 유형</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>금호건설</td>
-      <td>11,190원</td>
-      <td><span class="red">+29.97%</span></td>
-      <td>⚡ 거래대금 폭발 (전일대비 2485% 폭증 / 311억 주도주)</td>
-    </tr>
-    <tr>
-      <td>삼화콘덴서</td>
-      <td>151,000원</td>
-      <td><span class="red">+13.53%</span></td>
-      <td>⚡ 거래대금 폭발 (전일대비 434% 폭증 / 193억 주도주)</td>
-    </tr>
-  </tbody>
-</table>
-
-        <h3>🔥 거래대금 상위 TOP 20 & 주체별 상세 수급</h3>
-        <table border="1" class="dataframe table">
-  <thead>
-    <tr style="text-align: right;">
-      <th>순위</th>
-      <th>종목명</th>
-      <th>현재가</th>
-      <th>등락률</th>
-      <th>개인</th>
-      <th>외국인</th>
-      <th>기관계</th>
-      <th>금투</th>
-      <th>투신</th>
-      <th>사모</th>
-      <th>연기금</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1위</td>
-      <td>SK하이닉스</td>
-      <td>2,650,000원</td>
-      <td><span class="red">+0.84%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>2위</td>
-      <td>삼성전자</td>
-      <td>334,000원</td>
-      <td><span class="red">+3.41%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>3위</td>
-      <td>삼성전기</td>
-      <td>2,184,000원</td>
-      <td><span class="red">+7.16%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>4위</td>
-      <td>SK스퀘어</td>
-      <td>1,697,000원</td>
-      <td><span class="red">+3.48%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>5위</td>
-      <td>삼성전자우</td>
-      <td>212,000원</td>
-      <td><span class="red">+0.71%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>6위</td>
-      <td>주성엔지니어링</td>
-      <td>201,000원</td>
-      <td><span class="red">+13.82%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>7위</td>
-      <td>원익IPS</td>
-      <td>168,100원</td>
-      <td><span class="red">+5.72%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>8위</td>
-      <td>한국제16호스팩</td>
-      <td>1,941원</td>
-      <td><span class="blue">-2.95%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>9위</td>
-      <td>현대차</td>
-      <td>495,000원</td>
-      <td><span class="blue">-0.40%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>10위</td>
-      <td>삼성물산</td>
-      <td>468,500원</td>
-      <td><span class="blue">-0.53%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>11위</td>
-      <td>SK이터닉스</td>
-      <td>51,700원</td>
-      <td><span class="red">+3.40%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>12위</td>
-      <td>금호건설</td>
-      <td>11,190원</td>
-      <td><span class="red">+29.97%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>13위</td>
-      <td>SK</td>
-      <td>834,000원</td>
-      <td><span class="red">+6.24%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>14위</td>
-      <td>HPSP</td>
-      <td>54,000원</td>
-      <td><span class="red">+0.56%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>15위</td>
-      <td>삼성SDI</td>
-      <td>487,000원</td>
-      <td><span class="blue">-4.88%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>16위</td>
-      <td>LG전자</td>
-      <td>203,000원</td>
-      <td><span class="red">+3.20%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>17위</td>
-      <td>에코프로</td>
-      <td>106,600원</td>
-      <td><span class="blue">-9.66%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>18위</td>
-      <td>LS ELECTRIC</td>
-      <td>238,000원</td>
-      <td><span class="red">+6.25%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>19위</td>
-      <td>LG에너지솔루션</td>
-      <td>362,000원</td>
-      <td><span class="blue">-9.61%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-    <tr>
-      <td>20위</td>
-      <td>제주반도체</td>
-      <td>103,900원</td>
-      <td><span class="red">+7.22%</span></td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-      <td>0.0억</td>
-    </tr>
-  </tbody>
-</table>
-
-        <script>
-            var trace1 = {
-                x: ['국선(선물)', '장내 콜옵션', '장내 풋옵션'],
-                y: [-1250, 120, -40],
-                name: '개인 (억)',
-                type: 'bar',
-                marker: {color: '#94d2bd'}
-            };
-            var trace2 = {
-                x: ['국선(선물)', '장내 콜옵션', '장내 풋옵션'],
-                y: [3400, -50, 90],
-                name: '외국인 (억)',
-                type: 'bar',
-                marker: {color: '#dc3545'}
-            };
-            var trace3 = {
-                x: ['국선(선물)', '장내 콜옵션', '장내 풋옵션'],
-                y: [-2150, -70, -50],
-                name: '기관 (억)',
-                type: 'bar',
-                marker: {color: '#0d6efd'}
-            };
-            var data = [trace1, trace2, trace3];
-            var layout = {
-                barmode: 'group', 
-                title: '당일 파생상품 수급 모니터링 (개인 vs 외인 vs 기관)', 
-                paper_bgcolor: 'rgba(0,0,0,0)', 
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                yaxis: {title: '단위 (억원)'}
-            };
-            Plotly.newPlot('derivative_chart', data, layout);
-        </script>
+        
+        
+    <h3>📊 코스피 / 코스닥 시장별 종합 수급 (단위: 억)</h3>
+    <div class="table-container">
+        <table>
+            <tr><th>시장</th><th>개인</th><th>외국인</th><th>기관계</th><th>금투</th><th>투신</th><th>연기금</th></tr>
+            
+        </table>
+    </div>
+    
+        
+    <h3>💼 내 자산 보유 종목 및 입체 수급 연동</h3>
+    <div class="table-container">
+        <table>
+            <tr><th>종목명</th><th>현재가</th><th>내 수익률</th><th>오늘 등락률</th><th>외인순매수</th><th>기관순매수</th><th>연기금</th><th>투신</th></tr>
+            <tr><td><b>SK하이닉스</b></td><td>2,650,000원</td><td><span class="red">+18.67%</span></td><td><span class="red">+0.84%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td><b>현대차</b></td><td>495,000원</td><td><span class="blue">-13.65%</span></td><td><span class="blue">-0.40%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td><b>삼성SDI</b></td><td>487,000원</td><td><span class="blue">-12.88%</span></td><td><span class="blue">-4.88%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td><b>바이오인프라</b></td><td>2,300원</td><td><span class="blue">-65.40%</span></td><td><span class="blue">-3.36%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr>
+        </table>
+    </div>
+    
+        
+    <h3>📉 선물 / 옵션 주요 주체별 수급 동향 (동적 차트)</h3>
+    <div class="chart-container">
+        <div id="chart"></div>
+    </div>
+    <script>
+        var options = {
+            series: [
+                { name: '개인 (억)', data: [-1250,120,-40] },
+                { name: '외국인 (억)', data: [3400,-50,90] },
+                { name: '기관 (억)', data: [-2150,-70,-50] }
+            ],
+            chart: { type: 'bar', height: 320, toolbar: { show: false } },
+            plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
+            dataLabels: { enabled: false },
+            stroke: { show: true, width: 2, colors: ['transparent'] },
+            xaxis: { categories: ['국선(선물)','장내 콜옵션','장내 풋옵션'] },
+            yaxis: { title: { text: '계약 / 금액 (억)' } },
+            fill: { opacity: 1 },
+            colors: ['#66bb6a', '#ef5350', '#42a5f5'],
+            tooltip: { y: { formatter: function (val) { return val + " 억" } } }
+        };
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+    
+        
+    <h3>🚨 세력 포착 멀티 레이더 (주세전환 & 거래폭발)</h3>
+    <div class="table-container">
+        <table>
+            <tr><th style="width:20%;">포착 종목명</th><th style="width:15%;">현재가</th><th style="width:15%;">등락률</th><th>포착 시그널 유형</th></tr>
+            <tr><td><b>금호건설</b></td><td>11,190원</td><td><span class="red">+29.97%</span></td><td style='text-align:left;'>⚡ 거래대금 폭발 (전일대비 2485% 폭증 / 311억 주도주)</td></tr><tr><td><b>삼화콘덴서</b></td><td>151,000원</td><td><span class="red">+13.53%</span></td><td style='text-align:left;'>⚡ 거래대금 폭발 (전일대비 434% 폭증 / 193억 주도주)</td></tr>
+        </table>
+    </div>
+    
+        
+    <h3>🔥 거래대금 상위 TOP 20 상세 수급 (단위: 억)</h3>
+    <div class="table-container">
+        <table>
+            <tr><th>순위</th><th>종목명</th><th>현재가</th><th>등락률</th><th>개인</th><th>외국인</th><th>기관계</th><th>금투</th><th>투신</th><th>사모</th><th>연기금</th></tr>
+            <tr><td>1위</td><td><b>SK하이닉스</b></td><td>2,650,000원</td><td><span class="red">+0.84%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>2위</td><td><b>삼성전자</b></td><td>334,000원</td><td><span class="red">+3.41%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>3위</td><td><b>삼성전기</b></td><td>2,184,000원</td><td><span class="red">+7.16%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>4위</td><td><b>SK스퀘어</b></td><td>1,697,000원</td><td><span class="red">+3.48%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>5위</td><td><b>삼성전자우</b></td><td>212,000원</td><td><span class="red">+0.71%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>6위</td><td><b>주성엔지니어링</b></td><td>201,000원</td><td><span class="red">+13.82%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>7위</td><td><b>원익IPS</b></td><td>168,100원</td><td><span class="red">+5.72%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>8위</td><td><b>한국제16호스팩</b></td><td>1,941원</td><td><span class="blue">-2.95%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>9위</td><td><b>현대차</b></td><td>495,000원</td><td><span class="blue">-0.40%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>10위</td><td><b>삼성물산</b></td><td>468,500원</td><td><span class="blue">-0.53%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>11위</td><td><b>SK이터닉스</b></td><td>51,700원</td><td><span class="red">+3.40%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>12위</td><td><b>금호건설</b></td><td>11,190원</td><td><span class="red">+29.97%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>13위</td><td><b>SK</b></td><td>834,000원</td><td><span class="red">+6.24%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>14위</td><td><b>HPSP</b></td><td>54,000원</td><td><span class="red">+0.56%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>15위</td><td><b>삼성SDI</b></td><td>487,000원</td><td><span class="blue">-4.88%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>16위</td><td><b>LG전자</b></td><td>203,000원</td><td><span class="red">+3.20%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>17위</td><td><b>에코프로</b></td><td>106,600원</td><td><span class="blue">-9.66%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>18위</td><td><b>LS ELECTRIC</b></td><td>238,000원</td><td><span class="red">+6.25%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>19위</td><td><b>LG에너지솔루션</b></td><td>362,000원</td><td><span class="blue">-9.61%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr><tr><td>20위</td><td><b>제주반도체</b></td><td>103,900원</td><td><span class="red">+7.22%</span></td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td><td>0.0억</td></tr>
+        </table>
+    </div>
+    
     </body>
     </html>
     
